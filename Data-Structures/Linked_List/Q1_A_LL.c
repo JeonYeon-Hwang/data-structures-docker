@@ -90,7 +90,30 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+	// 여기서 내가 줘야 할 것은 index를 계산하여 제공하는 것
+	ListNode *cur;
+	if(ll->size == 0){
+		insertNode(ll, 0, item);
+		// printf("LinkedList가 비워져 있어 맨 앞에 추가를 하였습니다\n");
+		return 0;
+	}else{
+		// 머리에서 순회를 시작해야 겠죠?
+		cur = ll->head;
+		// printf("헤더 찾음 %d\n", cur->item);
+		int index = 0;
+
+		// // while 문으로 자기보다 작은 지 큰 지 계속 순회를 하며 index를 늘립니다
+		while(cur != NULL && cur->item < item){
+			cur = cur->next;
+			index++;
+		}
+
+		// printf("index를 찾았습니다. 현재 index는: %d\n", index);
+		insertNode(ll, index, item);
+		// printf("노드 삽입 완료!\n");
+		return index;
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
