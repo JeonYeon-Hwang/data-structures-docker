@@ -86,7 +86,38 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	// 사용할 변수를 선언
+	ListNode *cur;
+	int index = 0;
+	int alt_index = 0;
+
+	cur = ll->head;
+	
+	// while로 순환하면서 연산을 함
+	while(cur != NULL){
+		// printf("다음 노드와 인덱스: %d .. %d\n", cur->item, index);
+		// 해당 값의 홀짝 여부 판별
+		if(cur->item % 2 == 0){
+			int val = cur->item;
+			// printf("이 노드는 짝수! => %d\n", cur->item);
+			// 해당 노드는 삭제될 뿐만 아니라 새 LinkedList에 insert 됨
+			// core dumped 예외 처리
+			if(cur != NULL){
+				cur = cur->next;
+			}		
+
+			removeNode(ll, index);
+			insertNode(ll, alt_index, val);
+			// printf("다음 노드를 삭제 및 삽입=> %d\n", index);
+			alt_index++;
+			index++;
+		
+		}else if(cur != NULL){
+			cur = cur->next;
+			index++;
+		}	
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
