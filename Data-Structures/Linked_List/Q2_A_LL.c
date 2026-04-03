@@ -103,7 +103,40 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+	printf("함수를 인지하고 실행합니다\n");
+	// 각 배열의 포인터 역할 변수를 생성합니다
+	// 정석 법칙에 따르면 4개의 변수가 필요하답니다
+	ListNode *cur1;
+	ListNode *cur2;
+	ListNode *next1;
+	ListNode *next2;
+
+
+	// 시작점 설정
+	cur1 = ll1->head;
+	cur2 = ll2->head;
+
+	while(cur1 != NULL && cur2 != NULL){
+		// printf("cur1 노드값 출력: %d\n", cur1->item);
+		// printf("cur2 노드값 출력: %d\n", cur2->item);
+		// next에 배정을 함
+		next1 = cur1->next;
+		next2 = cur2->next;
+
+		// 배선망 재설계
+		cur1->next = cur2;
+		if(next1 != NULL){
+			cur2->next = next1;
+		}
+		
+		// 다음 단계로 이동
+		cur1 = next1;
+		cur2 = next2;
+
+		// ll2의 header도 재설정
+		ll2->head = cur2;
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
