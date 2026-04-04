@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 6 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -88,7 +89,61 @@ int main()
 
 int moveMaxToFront(ListNode **ptrHead)
 {
-    /* add your code here */
+    // 이중 포인터야.....
+	// &ll 과 &(ll.head)는 엄밀히 다르다고 함
+	// &ll 주소와, 객체의 첫 번째 요소인 ll.head의 주소는 동일
+	// 이중 포인터 다소 이해. 
+	// 해당 *은 이중포인터인 ptrHead의 주소를 통해 값(결국 또 다른 주소값)을 찾으라는 것을 의미
+	ListNode *node = *ptrHead;
+	ListNode *headNode = *ptrHead;
+	
+	int maxValue = INT_MIN;
+	int maxValIdx = 0;
+	int index = 0;
+
+	while(node != NULL){
+		// printf("다음 노드의 값은: %d\n", node->item);
+		if(node->item > maxValue){
+			maxValue = node->item;
+			maxValIdx = index;
+		}
+		node = node->next;
+		index++;
+	}
+
+	// printf("다음 값과 인덱스가 최대: %d .. %d \n", maxValue, maxValIdx);
+
+	// insetNode나 removeNode 함수를 호출해서 사용하지 못함. 직접 조작해야 함.
+	ListNode *maxNode;
+	ListNode *preNode;
+	ListNode *curr = headNode;
+
+	if(maxValIdx == 0) return 0;
+
+
+	for(int i = 0; i < maxValIdx; i++){
+		preNode = curr;
+		curr = curr->next;
+		maxNode = curr;
+	}
+
+	// printf("순회하여 찾음: %d .. %d \n", preNode->item, maxNode->item);
+
+	// 배선 작업 진행.
+	if(maxNode->next != NULL){
+		// preaNode의 next 값을 maxNode의 다음 노드의 주소값으로 지정
+		// maxNode 자체는 변화가 없음
+		preNode->next = maxNode->next;
+	}else{
+		preNode->next = NULL;
+	}
+
+	// 최대값 노드를 맨 앞으로 배열 진행
+	// maxNode의 next 주소값이 기존 headNode를 지정.
+	// *ptrHead의 주소값은 기존 maxNode로 지정.
+	// printf("요 부분 실행. 최종 배선 완료\n");
+	maxNode->next = headNode;
+	*ptrHead = maxNode;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
