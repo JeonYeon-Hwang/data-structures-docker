@@ -41,6 +41,7 @@ int main()
 	int c, i;
 	LinkedList ll;
 	LinkedList resultFrontList, resultBackList;
+    c = 1;
 
 	//Initialize the linked list as an empty linked list
 	ll.head = NULL;
@@ -102,7 +103,42 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	// 이미 메인에 FronList와 BackList가 선언되어 있음
+    // List와 같이 Node를 감싸는 상위 객체: 이미 저장공간이 정해진 만큼, 굳이 malloc 할 필요는 없음
+    // 특정 Node를 추적할 수 있는 포인터 필요함
+    ListNode *cur;
+    ListNode *prev;
+    
+    int index = 0;
+    int size;
+
+    cur = ll->head;
+    size = ll->size;
+
+    if(size <= 1){
+        resultFrontList->head = ll->head;
+        return;
+    }
+
+    // printf("기본 사이즈: %d\n", size);
+
+    while(index < (size + 1) / 2){
+        // printf("다음 노드값은 이렇습니다: %d\n", cur->item);
+        prev = cur;
+        cur = cur->next;
+        index++;
+    }
+
+    // 이제 front와 back 리스트의 head를 설정합니다
+    // double free detected라는 에러 해결 위한 로직
+    resultFrontList->head = ll->head;
+    // printf("프론트 끊는 pre Node는: %d\n", prev->item);
+    if(prev != NULL){
+        prev->next = NULL;
+    }
+
+    resultBackList->head = cur;
+    ll->head = NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

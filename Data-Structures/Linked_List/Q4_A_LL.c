@@ -86,7 +86,36 @@ int main()
 
 void moveEvenItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	// 사용할 변수를 선언
+	ListNode *cur;
+	int index = 0;
+	int alt_index = 0;
+
+	cur = ll->head;
+	
+	// while로 순환하면서 연산을 함
+	while(cur != NULL){
+		// 해당 값의 홀짝 여부 판별
+		if(cur->item % 2 != 0){
+			int val = cur->item;
+			// 요번에는 이전 문제와 다르게 홀짝 부분만 바꿈
+			// 해당 노드는 삭제될 뿐만 아니라 새 LinkedList에 insert 됨
+			// core dumped 예외 처리
+			if(cur != NULL){
+				cur = cur->next;
+			}		
+
+			removeNode(ll, index);
+			insertNode(ll, alt_index, val);
+
+			alt_index++;
+			index++;
+		
+		}else if(cur != NULL){
+			cur = cur->next;
+			index++;
+		}	
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
