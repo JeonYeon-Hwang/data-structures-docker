@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 6 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define MIN_INT -1000
 
@@ -111,7 +112,19 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+	int sSize = s->ll.size;
+
+	while(1){	
+		if(sSize == 0) break;
+		int val = pop(s);
+		
+		if(val == value){
+			push(s, val);
+			break;
+		}
+		
+		sSize--;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////
