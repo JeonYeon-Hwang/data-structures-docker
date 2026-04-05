@@ -109,7 +109,17 @@ int main()
 
 void recursiveReverse(Queue *q)
 {
-/* add your code here */
+	// 재귀 함수를 이용하여 q를 반전하는 문제로 파악
+	int size = q->ll.size;
+	if(size == 0){
+		// printf("모든 요소를 뺐습니다. 되먹임 시작.\n");
+		return;
+	}
+
+	int val = dequeue(q);
+	recursiveReverse(q);
+	// printf("재귀적 추적, 큐 요소 => %d\n", val);
+	enqueue(q, val);
 }
 
 //////////////////////////////////////////////////////////////////
