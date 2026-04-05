@@ -103,7 +103,28 @@ int main()
 
 int isStackPairwiseConsecutive(Stack *s)
 {
-  /* add your code here */
+	// PairwiseConsecutive에 대한 이해가 필요
+	int size = s->ll.size;
+	int preVal;
+
+	// 홀수면 애초에 성립이 안되므로, false 반환
+	if(size % 2 != 0) return 0;
+	
+	while(size > 0){
+		int val = pop(s);
+		// 홀짝 구별해서 비교해야 함.
+		if(size % 2 == 0){
+			preVal = val;
+		}else{
+			// 여기서 PairwiseConsecutive 비교 실행
+			// printf("상호간 비교: %d -- %d\n", preVal, val);
+			int gap = abs(preVal - val);
+			if(gap > 1) return 0;
+		}
+		size--;
+	}
+
+	return 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
