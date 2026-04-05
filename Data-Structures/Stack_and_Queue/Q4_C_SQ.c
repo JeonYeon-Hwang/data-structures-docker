@@ -112,7 +112,27 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	// 큐를 반전시키라는 것 같은데, 아마 스택을 사용하라는 문제 같음
+	// 스택을 새롭게 선언 => 이곳에는 LinkedList가 malloc하여 메모리를 새롭게 잡아 먹음
+	Stack s;
+
+	int qSize = q->ll.size;
+	int sSize = qSize;
+
+	// 빼고
+	while(qSize > 0){
+		int val = dequeue(q);
+		push(&s, val);
+		qSize--;
+	}
+
+	// 다시 넣고
+	while(sSize > 0){
+		int val = pop(&s);
+		enqueue(q, val);
+		sSize--;
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
