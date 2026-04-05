@@ -116,12 +116,32 @@ int main()
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
-	/* add your code here */
+	ListNode *node = ll->head;
+
+	// Queue 메서드 자체가 구현된 것으로 보임
+	while(node != NULL){
+		enqueue(q, node->item);
+		node = node->next;
+	}
 }
 
 void removeOddValues(Queue *q)
 {
-	/* add your code here */
+	// 구조체 복사가 아닌, 원본의 주소만 가져오기
+	LinkedList *ll = &(q->ll);
+	int size = ll->size;
+
+	while(size > 0){
+		int val = dequeue(q);
+		
+		if(val % 2 == 0){
+			enqueue(q, val);
+		}
+		
+		size--;
+	}
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////
