@@ -113,12 +113,45 @@ int main()
 
 void createStackFromLinkedList(LinkedList *ll, Stack *s)
 {
-    /* add your code here */
+    ListNode *node = ll->head;
+
+	while(node != NULL){
+		// Stack 구조체를 보아, LinkedList 구조체를 새롭게 생성하고 할당하는 것으로 보임
+		push(s, node->item);
+		node = node->next;
+	}
 }
 
 void removeEvenValues(Stack *s)
 {
-	/* add your code here */
+	LinkedList *ll = &(s->ll);
+	int size = ll->size;
+
+	// 별도의 스택을 선언하기
+	// 현업에서는 이를 free안할 경우 메모리 누수가 일어날 수 있다고 함
+	// 사이즈 변수도 초기화 해야 한다고 함
+	Stack temp;
+	temp.ll.size = 0;
+
+	while(size > 0){
+		int val = pop(s);
+
+		if(val % 2 != 0){
+			// 포인터 변수로 만들어 주소로 접근함
+			// printf("다음 변수는 다시 임시로 들어감: %d\n", val);
+			push(&temp, val);
+		}
+
+		size--;
+	}
+
+	int tempSize = temp.ll.size;
+	// printf("임시 스택 총 사이즈: %d\n", tempSize);
+	while(tempSize > 0){
+		int val = pop(&temp);
+		push(s, val);
+		tempSize--;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////
