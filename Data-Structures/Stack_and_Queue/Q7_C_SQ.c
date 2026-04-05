@@ -84,7 +84,7 @@ int main()
 			scanf("%s", str);
 			break;
         case 2:
-            if(balanced(str))
+            if(!balanced(str))
                 printf("not balanced!\n");
             else
                 printf("balanced!\n");
@@ -104,7 +104,55 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	// stack을 이용한 일종의 괄호 문제와 같음
+	// 아마 로컬에 stack을 선언해서 사용해야 할 듯
+	Stack st;
+	st.ll.size = 0;
+
+	// char를 배열로 접근하기
+	// 반환형이 int인 함수들을 (char)로 변환하기
+	// MIN_INT같은 반환 타입도 수정
+	for(int i = 0; expression[i] != '\0'; i++){
+		char ch = expression[i];
+		char c;
+		
+		// printf("배열요소 => %c\n", ch);
+		switch (ch)
+		{
+		case '{': case '[': case '(':
+			push(&st, ch);
+			break;
+		case '}':
+			if(isEmptyStack(&st)) return 0;
+			c = (char)peek(&st);
+			// printf("}감지, 뺍니다 => 확인하는 문자: %c\n", c);
+			if(c == '{') pop(&st);
+			else return 0;
+			break;
+		case ']':
+			if(isEmptyStack(&st)) return 0;
+			c = (char)peek(&st);
+			// printf("]감지, 뺍니다 => 확인하는 문자: %c\n", c);
+			if(c == '[') pop(&st);
+			else return 0;
+			break;
+		case ')':
+			if(isEmptyStack(&st)) return 0;
+			c = (char)peek(&st);
+			// printf(")감지, 뺍니다 => 확인하는 문자: %c\n", c);
+			if(c == '(') pop(&st);
+			else return 0;		
+			break;
+		
+		default:
+			break;
+		}
+		// printf("캐이스 후, 현재 스택 사이즈는: %d\n", st.ll.size);
+	}
+
+	// printf("현재 스택 사이즈는: %d\n", st.ll.size);
+	if(st.ll.size == 0) return 1;
+    else return 0;
 }
 
 ////////////////////////////////////////////////////////////
@@ -151,12 +199,12 @@ int pop(Stack *s)
 		return item;
 	}
 	else
-		return MIN_INT;
+		return 0;
 }
 
 int peek(Stack *s){
     if(isEmptyStack(s))
-        return MIN_INT;
+        return 0;
     else
         return ((s->ll).head)->item;
 }
