@@ -114,9 +114,35 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int identical(BTNode *tree1, BTNode *tree2)
-
 {
-   /* add your code here */
+    // 이진트리 입문 문제로 보임.
+    // 두 트리를 순회하면서 일치하는 지 확인하는 로직 구현 필요
+    // 중위 순회를 기준으로 기존 printTree 메서드를 응용 시도 => 재귀 함수
+    // 요소를 일일이 확인하여 일치하지 않을 경우 0을 반환
+    // ... 자식이 더 있는 지 없는 지도 확인해야 함 => 연산자 우선순위: && > ||
+    if(tree1 == NULL && tree2 == NULL) return 1;
+    else if ((tree1 == NULL && tree2 != NULL) || (tree1 != NULL && tree2 == NULL)){
+        // printf("속은 모르겠지만, 자식 수가 다름, 일치 않음을 반환!\n");
+        return 0;
+    } 
+
+
+    int result1 = identical(tree1->left, tree2->left);
+    // printf("각각 트리1, 트리2 아이템: %d, %d \n",tree1->item, tree2->item);
+    if(tree1->item != tree2->item){
+        // printf("일치 않음을 반환!\n");
+        return 0;
+    }
+    
+    int result2 = identical(tree1->right, tree2->right);
+    
+    if(result1 == 0 || result2 == 0){
+        // printf("일치 않음을 위쪽으로 전달\n");
+        return 0;
+    }else{
+        // printf("일치 함을 위쪽으로 전달\n");
+        return 1;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////
