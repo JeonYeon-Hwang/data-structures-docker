@@ -9,6 +9,8 @@ Purpose: Implementing the required functions for Question 2 */
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX(X,Y) ((X) > (Y) ? (X) : (Y))
+
 //////////////////////////////////////////////////////////////////////////////////
 typedef struct _btnode{
 	int item;
@@ -31,6 +33,7 @@ typedef struct _stack{
 
 // You should not change the prototypes of these functions
 int maxHeight(BTNode *node);
+int curHeight(BTNode *node, int depth);
 
 BTNode *createBTNode(int item);
 
@@ -95,9 +98,24 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int maxHeight(BTNode *node)
-
 {
-    /* add your code here */
+    // 최대 높이(깊이)를 구하는 함수
+    // 예전에 python으로 재귀적으로 푼 것을 기억하여 접근
+    // 인자값 depth가 추가로 더 필요해 함수를 하나 더 생성함
+    int maxDepth = curHeight(node, 0);
+    // printf("최종 깊이는: %d\n", maxDepth);
+    return maxDepth;
+}
+
+int curHeight(BTNode *node, int depth){
+    if(node == NULL) return depth;
+    depth++;
+
+    int lefthDepth = curHeight(node->left, depth);
+    // printf("현재 아이템: %d , 현재 깊이는: %d\n",node->item, depth);
+    int rightDepth = curHeight(node->right, depth);
+
+    return MAX(lefthDepth, rightDepth);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
