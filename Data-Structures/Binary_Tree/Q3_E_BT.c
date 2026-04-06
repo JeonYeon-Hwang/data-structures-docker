@@ -99,9 +99,31 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int countOneChildNodes(BTNode *node)
-
 {
-    /* add your code here */
+    // 자식이 하나인 노드 갯수를 찾는 함수 구현해야 함
+    int checkingBoth = 0;
+    int numOfSingles = 0;
+
+    if(node->left != NULL){
+        checkingBoth++;
+        int val = countOneChildNodes(node->left);
+        numOfSingles += val;
+    }
+    
+    if(node->right != NULL){
+        checkingBoth++;
+        int val = countOneChildNodes(node->right);
+        numOfSingles += val;
+    }
+    
+    if(checkingBoth == 1){
+        numOfSingles += 1;
+        // printf("다음 노드에서는 자녀가 한개: %d, 한부모 노드 총 수: %d\n", node->item, numOfSingles);
+        return numOfSingles;
+    }else{
+        // printf("다음 노드에서는 자녀가 두개거나 없음: %d, 한부모 노드 총 수: %d\n", node->item, numOfSingles);
+        return numOfSingles;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
