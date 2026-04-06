@@ -93,8 +93,33 @@ int main()
 
 void levelOrderTraversal(BSTNode* root)
 {
+	// 로컬에서 큐를 선언해사 만드라는 것으로 이해
+	// 문제를 읽다 보니까... BFS와 사실상 동일, 다만 이진트리임.
+	QueueNode *head = NULL; 
+    QueueNode *tail = NULL;	
 
-    /* add your code here */
+	// head, tail 모두 현재로서는 root 이므로,
+	enqueue(&head, &tail, root);
+
+	while(head != NULL){
+		BSTNode *node = dequeue(&head, &tail);
+
+		if(head != NULL) printf("%d, ", node->item);
+		else printf("%d. ", node->item);
+		
+
+		if(node->left != NULL){
+			BSTNode *nodeL = node->left;
+			enqueue(&head, &tail, nodeL);
+		}
+		
+		if(node->right != NULL){
+			BSTNode *nodeR = node->right;
+			enqueue(&head, &tail, nodeR);
+		}	
+		
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
