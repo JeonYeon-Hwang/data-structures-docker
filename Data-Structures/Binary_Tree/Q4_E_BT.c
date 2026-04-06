@@ -101,9 +101,27 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int sumOfOddNodes(BTNode *node)
-
 {
-    /* add your code here */
+    // 계속되는 트리 문제 ... 노드 중 값이 홀 수인 것을 모두 더하는 문제
+    if(node == NULL) return 0 ;
+    int sum = 0;
+
+    if(node->left != NULL){
+        int val = sumOfOddNodes(node->left);
+        sum += val;
+    }
+    
+    if(node->right != NULL){
+        int val = sumOfOddNodes(node->right);
+        sum += val;
+    }
+    
+    if(node->item % 2 != 0){
+        // printf("홀수 값이 찾아짐: %d\n", node->item);
+        sum += node->item;
+    }
+
+    return sum;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
