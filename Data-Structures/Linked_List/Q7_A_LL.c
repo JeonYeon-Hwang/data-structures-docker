@@ -96,14 +96,14 @@ void RecursiveReverse(ListNode **ptrHead)
 // 난해해서 재귀 함수를 별도로 생성하였습니다.
 ListNode * Recursive(ListNode *node, ListNode **ptrHead){
 	if(node->next == NULL){
-		// printf("재귀 종말, 반환함 \n");
+		printf("재귀 종말, 반환함 \n");
 		// 마지막 값이므로 이를 head로 지정
 		*ptrHead = node;
 		return node;
 	} 
 	// printf("재귀 중, 값: %d\n", node->item);
 	ListNode *prev = Recursive(node->next, ptrHead);
-	// printf("재귀 탈출, 값 -- 이전 값: %d -- %d\n", node->item, prev->item);
+	printf("재귀 탈출, 값 -- 이전 값: %d -- %d\n", node->item, prev->item);
 	// 여기서 배선 관계를 역전시킴. 
 	// 따로따로 독립적으로 역전시키기 가능.
 	prev->next = node;

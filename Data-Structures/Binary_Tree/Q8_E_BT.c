@@ -9,6 +9,8 @@ Purpose: Implementing the required functions for Question 8 */
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX(X,Y) ((X) > (Y) ? (X) : (Y))
+
 //////////////////////////////////////////////////////////////////////////////////
 
 typedef struct _btnode
@@ -102,7 +104,22 @@ int main()
 
 int hasGreatGrandchild(BTNode *node)
 {
-	/* add your code here */
+	// 상당히 어렵게 느껴지는 문제...
+    // 문제를 잘못 읽고 어렵게 생각하였음.
+    // 최소 하나의 증손주가 있는 노드를 찾는 문제 but 증손주 까지의 모든 노드 수를 구하는 문제로 오해.
+    if(node == NULL) return 0;
+
+    int layerL = hasGreatGrandchild(node->left) + 1;
+    int layerR = hasGreatGrandchild(node->right) + 1;
+ 
+    int totalLayers = MAX(layerL, layerR);
+    // printf("현재 노드'%d'에서 총 자식 계층 수: %d\n", node->item, totalLayers);
+    if(totalLayers >= 4){
+        // printf("해당 노드 발행!\n");
+        printf("%d ", node->item);
+    }
+    
+    return totalLayers;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
