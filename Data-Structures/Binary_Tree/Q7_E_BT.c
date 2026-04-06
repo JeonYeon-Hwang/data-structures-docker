@@ -8,7 +8,9 @@ Purpose: Implementing the required functions for Question 7 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
+#define MIN(X,Y) ((X) < (Y) ? (X) : (Y))
 //////////////////////////////////////////////////////////////////////////////////
 
 typedef struct _btnode
@@ -102,7 +104,16 @@ int main()
 
 int smallestValue(BTNode *node)
 {
-	/* add your code here */
+    // 분할 정복을 이용하여 풀기
+    if(node == NULL) return INT_MAX;
+
+    int val = node->item;
+
+    int leftVal = smallestValue(node->left);
+    int rightVal = smallestValue(node->right);
+
+    int tempMin = MIN(leftVal, rightVal);
+    return MIN(val, tempMin);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
