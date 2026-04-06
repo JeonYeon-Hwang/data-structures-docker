@@ -105,7 +105,20 @@ int main()
 
 void mirrorTree(BTNode *node)
 {
-	/* add your code here */
+	// 트리 자체를 미러링 해서 생성해야 할 듯 하는데 .. 어렵게 느껴진다.
+    // 생각이 났다! => 애초에 LinkedList 형태의 구조인 만큼
+    // 각 단계에서 right <-> left를 독립적으로 변경을 해도 적용이 가능함.
+    if(node == NULL) return;
+
+    BTNode *leftNode = node->left;
+    BTNode *rightNode = node->right;
+
+    // 먼저 바꾸든 이후 바꾸든 과정 전체에는 영향이 없을 것으로 판단 => 바로 배선 교환 실행
+    node->left = rightNode;
+    node->right = leftNode;
+
+    mirrorTree(node->left);
+    mirrorTree(node->right);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
