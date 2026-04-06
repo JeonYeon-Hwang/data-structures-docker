@@ -105,7 +105,15 @@ int main()
 
 void printSmallerValues(BTNode *node, int m)
 {
-	/* add your code here */
+	// 전위이든 후위이든 그냥 순회하다가 작은 값이면 출력하는 간단한 로직 구현으로 목표함
+    if(node == NULL) return;
+
+    if(node->item < m){
+        printf("%d ", node->item);
+    }
+
+    printSmallerValues(node->left, m);
+    printSmallerValues(node->right, m);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
