@@ -163,8 +163,8 @@ void removeAndRearrayTree(BSTNode *target, BSTNode *prev){
 	if (target->left != NULL && target->right != NULL) {
         // 여기서'대역(Successor) 찾기' 노가다 진행
         // 1 - 오른쪽 자식 중 가장 작은 놈(minNode)과 그 부모(minParent)를 찾는다
-		BSTNode *minNode = target;
-		BSTNode *minParent = target;
+		BSTNode *minNode = target->right;
+		BSTNode *minParent = target->right;
 
 		while(minNode->left != NULL){
 			minParent = minNode;
@@ -179,7 +179,8 @@ void removeAndRearrayTree(BSTNode *target, BSTNode *prev){
 			target->item = val;
 			minParent->left = NULL;
 		}else{
-			prev->right = minNode;
+			target->item = minNode->item;
+			target->right = minNode->right;
 		}
         return;
     }
