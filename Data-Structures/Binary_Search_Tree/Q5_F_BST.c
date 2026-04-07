@@ -40,6 +40,7 @@ BSTNode *peek(Stack *s);
 int isEmpty(Stack *s);
 void removeAll(BSTNode **node);
 BSTNode* removeNodeFromTree(BSTNode *root, int value);
+void removeAndRearrayTree(BSTNode *node);
 
 ///////////////////////////// main() /////////////////////////////////////////////
 
@@ -59,7 +60,7 @@ int main()
 
 	while (c != 0)
 	{
-		printf("Please input your choice(1/2/0): ");
+		printf("Please input your choice(1/2/3/0): ");
 		scanf("%d", &c);
 
 		switch (c)
@@ -73,6 +74,11 @@ int main()
 			printf("The resulting post-order traversal of the binary search tree is: ");
 			postOrderIterativeS2(root); // You need to code this function
 			printf("\n");
+			break;
+		case 3:
+			printf("Input an integer that you want to remove from the Binary Search Tree: ");
+			scanf("%d", &i);
+			removeNodeFromTree(root, i);
 			break;
 		case 0:
 			removeAll(&root);
@@ -118,7 +124,27 @@ void postOrderIterativeS2(BSTNode *root)
    deletes the key and returns the new root. Make recursive function. */
 BSTNode* removeNodeFromTree(BSTNode *root, int value)
 {
-	/* add your code here */
+	printf("뎁스 들어감 --\n");
+	BSTNode *curr = root;
+	if(curr == NULL) return NULL;
+
+	if(curr->item > value){
+		printf("왼쪽으로!\n");
+		removeNodeFromTree(curr->left, value);
+	}else if(curr->item < value){
+		printf("오른쪽으로!\n");
+		removeNodeFromTree(curr->right, value);
+	}else if(curr->item == value){
+		printf("찾았습니다: %d\n", curr->item);
+		return curr;
+	}
+
+}
+
+void removeAndRearrayTree(BSTNode *node){
+	// 추가문제: 특정 값인 노드를 삭제하는 로직
+	// 1 - leafNode시, 2 - child가 하나일 때, 3 - child가 두개 일 때 각각
+	// 3 번 케이스의 경우 총 4가지 케이스로 나눠짐
 }
 ///////////////////////////////////////////////////////////////////////////////
 
