@@ -90,7 +90,23 @@ int main()
 
 void inOrderTraversal(BSTNode *root)
 {
-	 /* add your code here */
+	// Stack이 주어졌다는 것은.. 중위 순회를 재귀가 아닌 반복문으로 풀라는 뜻.
+	Stack s;
+	BSTNode *node = root;
+	
+	s.top = 0;
+
+	while(1){
+		for(; node != NULL; node = node->left){
+			push(&s, node);
+		}
+
+		if(isEmpty(&s)) break;
+
+		node = pop(&s);
+		printf("%d ", node->item);
+		node = node->right;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
