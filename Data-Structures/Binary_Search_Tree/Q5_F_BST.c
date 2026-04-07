@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 5
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -40,7 +41,7 @@ BSTNode *peek(Stack *s);
 int isEmpty(Stack *s);
 void removeAll(BSTNode **node);
 BSTNode* removeNodeFromTree(BSTNode *root, int value);
-void removeAndRearrayTree(BSTNode *node);
+void removeAndRearrayTree(BSTNode *node, BSTNode *prev);
 
 ///////////////////////////// main() /////////////////////////////////////////////
 
@@ -126,25 +127,57 @@ BSTNode* removeNodeFromTree(BSTNode *root, int value)
 {
 	printf("뎁스 들어감 --\n");
 	BSTNode *curr = root;
+	BSTNode *prev;
+
+	prev = curr;
+
 	if(curr == NULL) return NULL;
 
 	if(curr->item > value){
 		printf("왼쪽으로!\n");
-		removeNodeFromTree(curr->left, value);
+		curr = curr->left;
+
+		if(curr->item == value){
+			printf("찾았습니다, 현 -- 이전: %d -- %d\n", prev->item, curr->item);
+			return curr;
+		}
+		removeNodeFromTree(curr, value);
 	}else if(curr->item < value){
 		printf("오른쪽으로!\n");
-		removeNodeFromTree(curr->right, value);
-	}else if(curr->item == value){
-		printf("찾았습니다: %d\n", curr->item);
-		return curr;
+		curr = curr->right;
+
+		if(curr->item == value){
+			printf("찾았습니다, 현 -- 이전: %d -- %d\n", prev->item, curr->item);
+			return curr;
+		}
+		removeNodeFromTree(curr, value);
+	}else{
+		return NULL;
 	}
 
 }
 
-void removeAndRearrayTree(BSTNode *node){
+void removeAndRearrayTree(BSTNode *target, BSTNode *prev){
 	// 추가문제: 특정 값인 노드를 삭제하는 로직
 	// 1 - leafNode시, 2 - child가 하나일 때, 3 - child가 두개 일 때 각각
 	// 3 번 케이스의 경우 총 4가지 케이스로 나눠짐
+
+	// 3번 케이스 => 노가다 처럼 직접 구해야 한다고 함:
+	if (target->left != NULL && target->right != NULL) {
+        // 여기서 아까 말한 '대역(Successor) 찾기' 노가다를 합니다.
+        // 1. 오른쪽 자식 중 가장 작은 놈(minNode)과 그 부모(minParent)를 찾는다.
+        // 2. target->value = minNode->value; (값만 복사)
+        // 3. 재귀적으로 진짜 minNode를 지우거나, 
+        //    지금 이 함수를 다시 호출해서 minNode를 날려버립니다.
+        return; // 작업을 마쳤으니 함수 종료!
+    }
+
+	// 1, 2번 케이스:
+	BSTNode *child = (target->left != NULL) ? target->left : target->right;
+	
+	if (prev->left == target) prev->left = child;
+	else prev->right = child;
+
 }
 ///////////////////////////////////////////////////////////////////////////////
 
